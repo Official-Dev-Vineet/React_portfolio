@@ -1,35 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
-function App() {
-  const [count, setCount] = useState(0)
-
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
+} from "react-router-dom";
+import Loader from "./helper/Loader";
+import { lazy, Suspense } from "react";
+const RootLayout = lazy(() => import("./helper/RootLayout"));
+const Error = lazy(() => import("./helper/Error"));
+const Home = lazy(() => import("./components/Home/Home"));
+const PageNotFound = lazy(() => import("./helper/PagenotFound"));
+export const App = () => {
+  const routes = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path="/" element={<RootLayout />} errorElement={<Error />}>
+        <Route index exact element={<Home />} />
+        <Route path="/about-us" element={<>About us</>} />
+        <Route path="/services" element={<>Services</>} />
+        <Route path="/connect" element={<>Connect</>} />
+        <Route path="/contact-us" element={<>Contact us</>} />
+        <Route
+          path="*"
+          element={<PageNotFound pathData={window.location.href} />}
+        />
+      </Route>
+    )
+  );
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
-
-export default App
+    <Suspense fallback={<Loader />}>
+      <RouterProvider router={routes} />
+    </Suspense>
+  );
+};
