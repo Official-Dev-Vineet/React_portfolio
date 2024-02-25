@@ -24,6 +24,10 @@ const Banner = () => {
   ];
   return (
     <section className="banner">
+      <div className="circle"></div>
+      <div className="circle"></div>
+      <div className="circle"></div>
+      <div className="circle"></div>
       <div className="banner-header">
         <h2>
           <span>Hi, I&apos;m</span>
@@ -58,6 +62,9 @@ const Banner = () => {
             ))}
           </ul>
         </div>
+      </div>
+      <div className="banner-footer">
+        <Link to="/about-us">About me</Link>
       </div>
     </section>
   );

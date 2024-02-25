@@ -1,10 +1,22 @@
-import {  useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState(false);
+  useEffect(() => {
+    const navBarHandler = () => {
+      if (window.scrollY > 50) {
+        setActive(true);
+      } else {
+        setActive(false);
+      }
+    };
+    window.addEventListener("scroll", navBarHandler);
+    return () => window.removeEventListener("scroll", navBarHandler);
+  }, []);
   return (
-    <nav>
-      <ul className="common-link left">
+    <nav className={`${active && "active"}`}>
+      <ul className={`common-link left ${open && "active"}`}>
         <li>
           <NavLink to="/">Home</NavLink>
         </li>
