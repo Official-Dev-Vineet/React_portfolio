@@ -14,7 +14,7 @@ const ProjectCard = ({ title, link, images }) => {
   return (
     <div className="project-card" onMouseMove={mouseMove}>
       <div className="project-card__image">
-        <img src={images} alt="project" />
+        <img src={images} alt="project" loading="lazy" />
       </div>
       <div className="project-card__content">
         <h3>
